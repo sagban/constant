@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  singlestore:
+    image: memsql/cluster-in-a-box
+    ports:
+    - 3306:3306
+    - 8080:8080
+    volumes:
+    # persist data between runs:
+    - db-data:/var/lib/memsql
+    - ./init.sql:/init.sql
+    environment:
+    # use the LICENSE_KEY environment variable set in the terminal:
+    - LICENSE_KEY=${29c10d4fb6644501b2b2ef21aac73ed73109fe28c5b8ca55eff6c3ae353d7dc2}
+    - START_AFTER_INIT=Y
+    - ROOT_PASSWORD=Devpost#123
+
+volumes:
+  db-data:
