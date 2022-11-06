@@ -1,0 +1,64 @@
+azure_functions/bin
+azure_functions/obj
+azure_functions/csx
+azure_functions/.vs
+azure_functions/edge
+azure_functions/Publish
+
+*.user
+*.suo
+*.cscfg
+*.Cache
+project.lock.json
+
+/packages
+/TestResults
+
+
+azure_functions/.secrets
+azure_functions/appsettings.json
+azure_functions/local.settings.json
+
+# Local python packages
+azure_functions/.python_packages/
+
+# Python Environments
+azure_functions/.env
+azure_functions/.venv
+azure_functions/env/
+azure_functions/venv/
+azure_functions/ENV/
+azure_functions/env.bak/
+azure_functions/venv.bak/
+
+# Byte-compiled / optimized / DLL files
+azure_functions/__pycache__/
+azure_functions/*.py[cod]
+azure_functions/*$py.class
+
+
+# dependencies
+/frontend/node_modules
+/frontend/.pnp
+frontend/.pnp.js
+
+# testing
+/frontend/coverage
+
+# production
+/frontend/build
+
+# misc
+*/.DS_Store
+*/.env.local
+*/.env.development.local
+*/.env.test.local
+*/.env.production.local
+
+*/npm-debug.log*
+*/yarn-debug.log*
+*/yarn-error.log*
+
+
+*.vscode
+
