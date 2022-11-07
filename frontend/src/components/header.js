@@ -25,7 +25,7 @@ const Header = () => {
                             <div class="collapse navbar-collapse s-header-v2__navbar-collapse" id="nav-collapse">
                                 <ul class="s-header-v2__nav">
                                     <li class="s-header-v2__nav-item"><a href="/about" class="s-header-v2__nav-link">About</a></li>
-                                    <li class="s-header-v2__nav-item"><a href="/#start" class="s-header-v2__nav-link">Analyze Chat</a></li>
+                                    <li class="s-header-v2__nav-item"><a href="/get-started" class="s-header-v2__nav-link">Crops</a></li>
                                     <li className="s-header-v2__nav-item"><a href="/team" class="s-header-v2__nav-link">Team</a>
                                     </li>
                                 </ul>

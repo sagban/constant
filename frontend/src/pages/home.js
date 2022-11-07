@@ -8,10 +8,10 @@ const Home = () => {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="g-margin-b-40--xs">
-                            <h1 class="g-font-size-60--xs g-font-size-55--sm g-font-size-65--md g-font-weight--600 g-color--dark">Get Insights into your chats</h1>
-                            <p class="g-font-size-24--xs g-font-size-24--sm g-color--dark g-font-weight--600">Analyze your chats with natural language processing powered by expert.ai</p>
+                            <h1 class="g-font-size-60--xs g-font-size-55--sm g-font-size-65--md g-font-weight--600 g-color--dark">Step towards precision agriculture</h1>
+                            <p class="g-font-size-24--xs g-font-size-24--sm g-color--dark g-font-weight--600">recommends optimum crops to be cultivated based on soil properties and weather conditions</p>
                         </div>
-                        <a href="#start"
+                        <a href="/get-started"
                             class="text-uppercase s-btn s-btn--sm s-btn--dark-bg g-padding-x-30--xs">Get Started</a>
                     </div>
                 </div>
@@ -20,8 +20,9 @@ const Home = () => {
         <div class="container g-padding-y-80--xs">
             <div class="row">
                 <div class="col-md-6">
-                    <h1 class="g-font-weight--700"><b>It's easy than ever to analyze your chats and get first hand data insights</b></h1>
-                    <p class="g-font-weight--700 g-color--dark g-font-size-22--xs g-margin-t-25--xs">Identify the bullying, quick notes, top discussed topics, and many more stats out of your chats.</p>
+                    <h1 class="g-font-weight--700"><b>It's easy than ever to know what crop to grow for maximum yield and profits</b></h1>
+                    <p class="g-font-weight--700 g-color--dark g-font-size-22--xs g-margin-t-25--xs">Farming MadeEasy utilizes the powerful Singlestore DB, offers an ultra fast ingest and query platform that enables real-time model scoring on both
+                        streaming and historical data.</p>
 
                 </div>
                 <div className="col-md-2"></div>

@@ -4,6 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import Home from './pages/home';
 import About from './pages/about';
 import Team from './pages/team';
+import Start from './pages/start';
 import Header from './components/header';
 import Footer from './components/footer';
 import { BrowserRouter as Router, Routes as Switch, Route, Link } from 'react-router-dom';
@@ -22,6 +23,9 @@ root.render(
         </Switch>
         <Switch>
           <Route exact path='/team' element={<Team />} />
+        </Switch>
+        <Switch>
+          <Route exact path='/get-started' element={<Start />} />
         </Switch>
 
       </Router>
