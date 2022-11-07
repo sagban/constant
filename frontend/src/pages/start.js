@@ -8,6 +8,7 @@ const Start = () => {
     const [map, setMap] = useState(null);
     const [params, setParams] = useState({});
     const [visible, setVisible] = useState(false);
+    const [prediction, setPrediction] = useState("");
 
     const depth = "0-5cm";
     const value = "mean";
@@ -62,11 +63,10 @@ const Start = () => {
         axios.get(URL).then((res) => {
             if (res.status === 200) {
                 const data = res.data['data'][0];
-                params['railfall'] = data['precip'];
+                params['rainfall'] = data['precip'];
                 params['humidity'] = data['rh'];
-                params['temperture'] = data['temp'];
+                params['temperature'] = data['temp'];
                 setParams(params);
-                setVisible(true);
             }
 
         }).catch(function (error) {
@@ -77,6 +77,13 @@ const Start = () => {
     const getRecommendations = async () => {
         await getSoilProperties();
         await getWeatherConditions();
+        const URL = "http://localhost:7071/api/GetRecommendations";
+        axios.post(URL, params).then(res => {
+            if (res.status === 200) {
+                setPrediction(res.data);
+                setVisible(true);
+            }
+        })
     };
 
 
@@ -121,9 +128,12 @@ const Start = () => {
                         <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">PH: <span class="g-color--dark">{params?.phh2o}</span></p>
                         <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Temperature C: <span class="g-color--dark">{params?.temperture}</span></p>
                         <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Relative Humidity %: <span class="g-color--dark">{params?.humidity}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Rainfaill (in mm): <span class="g-color--dark">{params?.railfall}</span></p>
+                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Rainfaill (in mm): <span class="g-color--dark">{params?.rainfall}</span></p>
                     </div>
-                    <div class="col-md-7"></div>
+                    <div class="col-md-7">
+                        <p class="g-font-weight--700 g-font-size-18--xs g-color--dark">Best suitable crop for the mentioned parameters: <b>{prediction}</b></p>
+                        <img scr={`/img/${prediction}.jpg`} alt={prediction} width="300" />
+                    </div>
                 </div>
             </div>
             : <></>}

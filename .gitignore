@@ -32,9 +32,9 @@ azure_functions/env.bak/
 azure_functions/venv.bak/
 
 # Byte-compiled / optimized / DLL files
-azure_functions/__pycache__/
-azure_functions/*.py[cod]
-azure_functions/*$py.class
+*__pycache__/
+*.py[cod]
+*$py.class
 
 
 # dependencies
