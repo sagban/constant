@@ -18,7 +18,7 @@ body {
   height: 100%;
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
-  color: #424242;
+  color: #111;
   line-height: 1.6;
   background-color: #fff;
 }
@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   font-family: Poppins, sans-serif;
   line-height: 1.2;
-  color: #424242;
+  color: #111;
   margin-top: 0;
   margin-bottom: .5rem;
 }
@@ -46,7 +46,7 @@ h3 a,
 h4 a,
 h5 a,
 h6 a {
-  color: #424242;
+  color: #111;
   transition-duration: 200ms;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.7, 1, 0.7, 1);
@@ -89,11 +89,11 @@ em,
 li {
   font-size: 1rem;
   font-weight: 300;
-  color: #424242;
+  color: #111;
 }
 em > a,
 li > a {
-  color: #424242;
+  color: #111;
 }
 em > a:hover,
 li > a:hover {
@@ -105,7 +105,7 @@ small {
 label {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #424242;
+  color: #111;
   margin-bottom: .25rem;
 }
 i {
@@ -219,12 +219,12 @@ fieldset[disabled] .s-btn {
   border-color: #fff;
 }
 .s-btn--white-brd:focus, .s-btn--white-brd:hover {
-  color: #424242;
+  color: #111;
   background: #fff;
   border-color: #fff;
 }
 .s-btn--white-bg {
-  color: #424242;
+  color: #111;
   background: #fff;
 }
 .s-btn--white-bg:focus, .s-btn--white-bg:hover {
@@ -233,10 +233,10 @@ fieldset[disabled] .s-btn {
 }
 .s-btn--dark-bg {
   color: #fff;
-  background: #424242;
+  background: #111;
   border-width: 0.0625rem;
   border-style: solid;
-  border-color: #424242;
+  border-color: #111;
 }
 .s-btn--dark-bg:focus, .s-btn--dark-bg:hover {
   color: #fff;
@@ -244,16 +244,16 @@ fieldset[disabled] .s-btn {
   border-color: #76BA99;
 }
 .s-btn--dark-brd {
-  color: #424242;
+  color: #111;
   background: transparent;
   border-width: 0.0625rem;
   border-style: solid;
-  border-color: #424242;
+  border-color: #111;
 }
 .s-btn--dark-brd:focus, .s-btn--dark-brd:hover {
   color: #fff;
-  background: #424242;
-  border-color: #424242;
+  background: #111;
+  border-color: #111;
 }
 .s-btn--primary-bg {
   color: #fff;
@@ -492,26 +492,26 @@ fieldset[disabled] .s-btn {
   color: rgba(34, 35, 36, 0.5);
 }
 .s-form-v4__input:focus {
-  color: #424242;
-  border-color: #424242;
+  color: #111;
+  border-color: #111;
   box-shadow: none;
 }
 .s-form-v4__input:focus::-webkit-input-placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v4__input:focus::-moz-placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v4__input:focus:-ms-input-placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v4__input:focus::placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v4__icon {
   font-size: 1.125rem;
   color: rgba(34, 35, 36, 0.7);
-  border-bottom: 0.0625rem solid #424242;
+  border-bottom: 0.0625rem solid #111;
   padding: 0 .75rem .95rem;
 }
 /* Form Input v5 */
@@ -521,7 +521,7 @@ fieldset[disabled] .s-btn {
   font-size: 0.875rem;
   font-weight: 300;
   background: transparent;
-  border: 0.0625rem solid #424242;
+  border: 0.0625rem solid #111;
   box-shadow: none;
   letter-spacing: .1rem;
   text-transform: uppercase;
@@ -540,21 +540,21 @@ fieldset[disabled] .s-btn {
   color: #656565;
 }
 .s-form-v5__input:focus {
-  color: #424242;
+  color: #111;
   box-shadow: none;
-  border-color: #424242;
+  border-color: #111;
 }
 .s-form-v5__input:focus::-webkit-input-placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v5__input:focus::-moz-placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v5__input:focus:-ms-input-placeholder {
-  color: #424242;
+  color: #111;
 }
 .s-form-v5__input:focus::placeholder {
-  color: #424242;
+  color: #111;
 }
 /*----------------------------------
   Icons
@@ -607,7 +607,7 @@ fieldset[disabled] .s-btn {
   border-color: #76BA99;
 }
 .s-icon--white-bg {
-  color: #424242;
+  color: #111;
   background: #fff;
   border-width: 0.0625rem;
   border-style: solid;
@@ -1102,7 +1102,7 @@ fieldset[disabled] .s-btn {
   transform: translate3d(0, -0.4375rem, 0);
 }
 .s-header__trigger--dark .s-header__trigger-icon {
-  background: #424242;
+  background: #111;
 }
 .s-header__trigger svg {
   position: absolute;
@@ -2168,7 +2168,7 @@ fieldset[disabled] .s-btn {
   }
   /* Toggle */
   .s-header__shrink .s-header-v2__toggle-icon-bar--white, .s-header__shrink .s-header-v2__toggle-icon-bar--white:before, .s-header__shrink .s-header-v2__toggle-icon-bar--white:after {
-    background: #424242;
+    background: #111;
   }
   /* Logo */
   .s-header__shrink .s-header-v2__logo-img--default {
@@ -2271,7 +2271,7 @@ fieldset[disabled] .s-btn {
   margin-bottom: 0 !important;
 }
 .s-portfolio__filter-v1-item:hover {
-  color: #424242 !important;
+  color: #111 !important;
 }
 .s-portfolio__filter-v1-item.cbp-filter-item-active {
   color: #76BA99 !important;

@@ -19,7 +19,9 @@ const Start = () => {
         useMapEvents({
             click(e) {
                 setCenter([parseFloat(e.latlng.lat).toFixed(6), parseFloat(e.latlng.lng).toFixed(6)]);
-                map.flyTo([parseFloat(e.latlng.lat).toFixed(6), parseFloat(e.latlng.lng).toFixed(6)], map.getZoom())
+                map.flyTo([parseFloat(e.latlng.lat).toFixed(6), parseFloat(e.latlng.lng).toFixed(6)], map.getZoom());
+                setParams({});
+                setVisible(false);
             },
         });
         return false;
@@ -32,6 +34,8 @@ const Start = () => {
         lng = parseFloat(lng);
         map.flyTo([lat, lng], map.getZoom());
         setCenter([lat, lng]);
+        setParams({});
+        setVisible(false);
     }
 
 
@@ -78,12 +82,16 @@ const Start = () => {
         await getSoilProperties();
         await getWeatherConditions();
         const URL = "http://localhost:7071/api/GetRecommendations";
-        axios.post(URL, params).then(res => {
-            if (res.status === 200) {
-                setPrediction(res.data);
-                setVisible(true);
-            }
-        })
+        console.log(params);
+        if (params !== {}) {
+            axios.post(URL, params).then(res => {
+                if (res.status === 200) {
+                    setPrediction(res.data);
+                    setVisible(true);
+                }
+            })
+        }
+
     };
 
 
@@ -92,13 +100,13 @@ const Start = () => {
         <div class="container g-padding-y-60--xs g-margin-t-40--xs">
             <div class="row">
                 <div class="col-md-10">
-                    <MapContainer center={center} zoom={6} scrollWheelZoom={false} ref={setMap}>
+                    <MapContainer center={center} zoom={10} scrollWheelZoom={false} ref={setMap}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <MapEvents />
-                        <Circle center={center} pathOptions={{ color: "green" }} radius={50} />
+                        <Circle center={center} pathOptions={{ color: "green" }} radius={200} />
                     </MapContainer>
                 </div>
                 <div class="col-md-2">
@@ -132,7 +140,7 @@ const Start = () => {
                     </div>
                     <div class="col-md-7">
                         <p class="g-font-weight--700 g-font-size-18--xs g-color--dark">Best suitable crop for the mentioned parameters: <b>{prediction}</b></p>
-                        <img scr={`/img/${prediction}.jpg`} alt={prediction} width="300" />
+                        <img src={`./img/${prediction}.jpg`} alt={prediction} width={300} />
                     </div>
                 </div>
             </div>

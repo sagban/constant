@@ -9,7 +9,7 @@ const Home = () => {
                     <div class="col-md-6">
                         <div class="g-margin-b-40--xs">
                             <h1 class="g-font-size-60--xs g-font-size-55--sm g-font-size-65--md g-font-weight--600 g-color--dark">Step towards precision agriculture</h1>
-                            <p class="g-font-size-24--xs g-font-size-24--sm g-color--dark g-font-weight--600">recommends optimum crops to be cultivated based on soil properties and weather conditions</p>
+                            <p class="g-font-size-24--xs g-font-size-20--sm g-color--dark g-font-weight--600">recommends optimum crops to<br></br> be cultivated based on soil<br></br> properties and weather conditions</p>
                         </div>
                         <a href="/get-started"
                             class="text-uppercase s-btn s-btn--sm s-btn--dark-bg g-padding-x-30--xs">Get Started</a>

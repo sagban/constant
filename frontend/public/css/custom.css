@@ -1,8 +1,8 @@
 .home{
-    background: url('../img/background.png');
-    background-size: 35% !important;
+    background: url('../img/background.jpg');
+    background-size: cover !important;
     background-repeat: no-repeat !important;
-    background-position: 85% 50% !important;
+    /* background-position: 85% 50% !important; */
 }
 
 .home-black{

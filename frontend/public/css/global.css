@@ -1101,13 +1101,13 @@
   border: 0.25rem solid #fff;
 }
 .g-hor-border-1__solid--dark {
-  border: 0.0625rem solid #424242;
+  border: 0.0625rem solid #111;
 }
 .g-hor-border-1__solid--dark {
-  border: 0.125rem solid #424242;
+  border: 0.125rem solid #111;
 }
 .g-hor-border-4__solid--dark {
-  border: 0.25rem solid #424242;
+  border: 0.25rem solid #111;
 }
 /*----------------------------------
   Box Shadow
@@ -6641,7 +6641,7 @@
   color: #fff !important;
 }
 .g-color--dark {
-  color: #424242 !important;
+  color: #111 !important;
 }
 .g-color--dark-light {
   color: #242526 !important;
@@ -6700,7 +6700,7 @@
   background-color: #fff !important;
 }
 .g-bg-color--dark {
-  background-color: #424242 !important;
+  background-color: #111 !important;
 }
 .g-bg-color--dark-light {
   background-color: #242526 !important;
