@@ -6,7 +6,7 @@ import rawdata from './data.json';
 import ToolTipCircle from "../components/ToolTipCircle";
 import Slider from "../components/slider";
 import DatePicker from "react-datepicker";
-
+import { stringify } from 'wkt';
 import "react-datepicker/dist/react-datepicker.css";
 const Start = () => {
 
@@ -80,6 +80,12 @@ const Start = () => {
                         rectangle.push([lat, lng]);
                         rectangle.push(rectangle[0]);
                         setRectangle(rectangle);
+                        console.log(rectangle);
+                        const str = stringify({
+                            type: "Polygon",
+                            coordinates: [rectangle]
+                        })
+                        console.log(str);
                     }
                     else if (rectangle.length < 4) {
                         rectangle.push([lat, lng]);
