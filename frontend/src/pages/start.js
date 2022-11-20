@@ -1,152 +1,109 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { MapContainer, TileLayer, useMapEvents, Circle } from 'react-leaflet'
+import { MapContainer, TileLayer, useMapEvents, Circle, Polyline, Tooltip } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
+import rawdata from './data.json';
+import ToolTipCircle from "../components/ToolTipCircle";
 const Start = () => {
 
-    const [center, setCenter] = useState([-2.22977, 24.75178]);
+    const lineOptions = { color: 'purple' }
+    const zoom = 12;
+    const [curr, setCurr] = useState(0);
     const [map, setMap] = useState(null);
-    const [params, setParams] = useState({});
-    const [visible, setVisible] = useState(false);
-    const [prediction, setPrediction] = useState("");
 
-    const depth = "0-5cm";
-    const value = "mean";
-    const ph = "phh2o";
-    const nitrogen = "nitrogen";
+    const data = rawdata['data'];
+
+    // Grouping on the basis in latitude and longitude
+    const dict = {}
+    data.map(d => {
+        const lat = parseFloat(d.center[0]).toFixed(2);
+        const lng = parseFloat(d.center[1]).toFixed(1);
+        const point = [lat, lng];
+        const pointKey = JSON.stringify(point);
+        if (!dict[pointKey]) {
+            dict[pointKey] = [];
+            dict[pointKey].push(d);
+        }
+        else {
+            dict[pointKey].push(d);
+        }
+    });
+
+    // converting unique dict to array
+    const data_array = []
+    for (var key in dict) {
+        if (dict.hasOwnProperty(key)) {
+            data_array.push(dict[key]);
+        }
+    }
+
+    // Creating array of polygons to display on map
+    const polygons = data_array.map(polygon => {
+        return polygon[0]['coordinates']
+    });
+
+
+    const [center, setCenter] = useState(polygons[curr][0]);
+
+    const changeCenter = (lat, lng) => {
+
+        lat = parseFloat(lat).toFixed(6);
+        lng = parseFloat(lng).toFixed(6);
+        map.flyTo([lat, lng], zoom);
+        setCenter([lat, lng]);
+    }
 
     const MapEvents = () => {
         useMapEvents({
             click(e) {
-                setCenter([parseFloat(e.latlng.lat).toFixed(6), parseFloat(e.latlng.lng).toFixed(6)]);
-                map.flyTo([parseFloat(e.latlng.lat).toFixed(6), parseFloat(e.latlng.lng).toFixed(6)], map.getZoom());
-                setParams({});
-                setVisible(false);
+                changeCenter(e.latlng.lat, e.latlng.lng);
             },
         });
         return false;
     }
 
-
-    const changeCenter = (lat, lng) => {
-
-        lat = parseFloat(lat);
-        lng = parseFloat(lng);
-        map.flyTo([lat, lng], map.getZoom());
-        setCenter([lat, lng]);
-        setParams({});
-        setVisible(false);
+    const nextPolygon = () => {
+        const newcurr = (curr + 1) % polygons.length;
+        setCurr(newcurr);
+        changeCenter(data[newcurr]['center'][0], data[newcurr]['center'][1]);
     }
-
-
-    const getSoilProperties = () => {
-        const SOIL_URL = `https://rest.isric.org/soilgrids/v2.0/properties/query?lon=${center[1]}&lat=${center[0]}&property=${nitrogen}&property=${ph}&depth=${depth}&value=${value}`;
-        axios.get(SOIL_URL).then(res => {
-            if (res.status === 200) {
-                const results = res['data']['properties']['layers'];
-                results.forEach(el => {
-                    const property = el['name'];
-                    if (el['depths'][0]['label'] === depth) {
-                        params[property] = el['depths'][0]['values'][value] / 10;
-                        setParams(params);
-                    }
-                });
-            };
-
-        });
-
-    };
-
-    const getWeatherConditions = () => {
-        const date = new Date(), y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
-        const firstDay = `${y}-${m}-${d - 1}`;
-        const lastDay = `${y}-${m}-${d}`;
-        const URL = `https://api.weatherbit.io/v2.0/history/daily?lat=${center[0]}&lon=${center[1]}&start_date=${firstDay}&end_date=${lastDay}&key=67352e964a284bf1a4fb27047fd48e4f`;
-
-
-        axios.get(URL).then((res) => {
-            if (res.status === 200) {
-                const data = res.data['data'][0];
-                params['rainfall'] = data['precip'];
-                params['humidity'] = data['rh'];
-                params['temperature'] = data['temp'];
-                setParams(params);
-            }
-
-        }).catch(function (error) {
-            console.error(error);
-        });
-    }
-
-    const getRecommendations = async () => {
-        await getSoilProperties();
-        await getWeatherConditions();
-        const URL = "http://localhost:7071/api/GetRecommendations";
-        console.log(params);
-        if (params !== {}) {
-            axios.post(URL, params).then(res => {
-                if (res.status === 200) {
-                    setPrediction(res.data);
-                    setVisible(true);
-                }
-            })
-        }
-
-    };
-
 
     return (<>
 
         <div class="container g-padding-y-60--xs g-margin-t-40--xs">
             <div class="row">
-                <div class="col-md-10">
-                    <MapContainer center={center} zoom={10} scrollWheelZoom={false} ref={setMap}>
+                <div class="col-md-3"><div className="g-margin-b-10--xs">
+                    <label>Latitude</label>
+                    <input type={"text"} className="s-form-v4__input" onChange={(e) => changeCenter(e.target.value, center[1])} placeholder="Enter Latitude" value={center[0]}></input>
+                </div></div>
+                <div class="col-md-3"><div className="g-margin-b-10--xs">
+                    <label>Longitude</label>
+                    <input type={"text"} className="s-form-v4__input" onChange={(e) => changeCenter(center[0], e.target.value)} placeholder="Enter Longitude" value={center[1]}></input>
+                </div></div>
+                <div class="col-md-3"><div className="g-margin-t-30--xs">
+                    <button onClick={() => nextPolygon()}
+                        class="g-radius--3 text-uppercase s-btn s-btn--xs s-btn--primary-bg g-padding-x-20--xs">Next</button>
+                </div></div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <MapContainer center={center} zoom={5} scrollWheelZoom={false} ref={setMap}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <MapEvents />
-                        <Circle center={center} pathOptions={{ color: "green" }} radius={200} />
+                        <Polyline pathOptions={lineOptions} positions={polygons} />
+                        {data_array.map(polygon => {
+                            return <ToolTipCircle polygon={{ polygon }} />
+                            // return <Circle eventHandlers={showImages} center={polygon[0]['center']} pathOptions={{ color: "red" }} radius={200} ><Tooltip>Images Available: {polygon.length} <br /> Click to load images</Tooltip></Circle>
+                        })}
                     </MapContainer>
                 </div>
-                <div class="col-md-2">
-                    <div className="g-margin-b-10--xs">
-                        <label>Latitude</label>
-                        <input type={"text"} className="s-form-v4__input" onChange={(e) => changeCenter(e.target.value, center[1])} placeholder="Enter Latitude" value={center[0]}></input>
-                    </div>
-                    <div className="g-margin-b-10--xs">
-                        <label>Longitude</label>
-                        <input type={"text"} className="s-form-v4__input" onChange={(e) => changeCenter(center[0], e.target.value)} placeholder="Enter Longitude" value={center[1]}></input>
-                    </div>
-                    <div className="g-margin-t-20--xs">
-                        <button onClick={() => getRecommendations()}
-                            class="g-radius--3 text-uppercase s-btn s-btn--xs s-btn--primary-bg g-padding-x-20--xs">Get Started</button>
-                    </div>
-                </div>
+
             </div>
         </div>
-        {visible ?
-            <div className="container g-padding-y-40--xs" id="#results">
-                <div class="row">
-                    <h1 class="g-font-weight--700 g-margin-b-40--xs">Crop Recommendations</h1>
-                    <div class="col-md-5">
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Latitude: <span class="g-color--dark">{center[0]}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Longitude: <span class="g-color--dark">{center[1]}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Nitrogen: <span class="g-color--dark">{params?.nitrogen}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">PH: <span class="g-color--dark">{params?.phh2o}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Temperature C: <span class="g-color--dark">{params?.temperture}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Relative Humidity %: <span class="g-color--dark">{params?.humidity}</span></p>
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--primary">Rainfaill (in mm): <span class="g-color--dark">{params?.rainfall}</span></p>
-                    </div>
-                    <div class="col-md-7">
-                        <p class="g-font-weight--700 g-font-size-18--xs g-color--dark">Best suitable crop for the mentioned parameters: <b>{prediction}</b></p>
-                        <img src={`./img/${prediction}.jpg`} alt={prediction} width={300} />
-                    </div>
-                </div>
-            </div>
-            : <></>}
-
-
     </>)
 }
 

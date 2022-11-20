@@ -16,8 +16,9 @@ const Header = () => {
                         <div class="s-header-v2__navbar-col s-header-v2__navbar-col-width--130">
                             <div class="s-header-v2__logo">
                                 <a href="/" class="s-header-v2__logo-link">
-                                    <img class="s-header-v2__logo-img s-header-v2__logo-img--default" src="/logo.png" alt="logo" height="48" />
-                                    <img class="s-header-v2__logo-img s-header-v2__logo-img--shrink" src="/logo-sm.png" alt="logo" height="48" />
+                                    <p>SAR Catalog</p>
+                                    {/* <img class="s-header-v2__logo-img s-header-v2__logo-img--default" src="/logo.png" alt="logo" height="48" />
+                                    <img class="s-header-v2__logo-img s-header-v2__logo-img--shrink" src="/logo-sm.png" alt="logo" height="48" /> */}
                                 </a>
                             </div>
                         </div>
