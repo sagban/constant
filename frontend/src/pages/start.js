@@ -4,12 +4,15 @@ import { MapContainer, TileLayer, useMapEvents, Circle, Polyline, Tooltip } from
 import 'leaflet/dist/leaflet.css';
 import rawdata from './data.json';
 import ToolTipCircle from "../components/ToolTipCircle";
+import Slider from "../components/slider";
 const Start = () => {
 
     const lineOptions = { color: 'purple' }
     const zoom = 12;
     const [curr, setCurr] = useState(0);
     const [map, setMap] = useState(null);
+    const [showSlider, setShowSlider] = useState(false);
+    const [images, setImages] = useState([]);
 
     const data = rawdata['data'];
 
@@ -30,12 +33,15 @@ const Start = () => {
     });
 
     // converting unique dict to array
-    const data_array = []
+    let data_array = []
     for (var key in dict) {
         if (dict.hasOwnProperty(key)) {
             data_array.push(dict[key]);
         }
     }
+    data_array = data_array.filter(d => {
+        return d.length > 1
+    });
 
     // Creating array of polygons to display on map
     const polygons = data_array.map(polygon => {
@@ -63,9 +69,19 @@ const Start = () => {
     }
 
     const nextPolygon = () => {
-        const newcurr = (curr + 1) % polygons.length;
+        const newcurr = (curr + 1) % data_array.length;
         setCurr(newcurr);
-        changeCenter(data[newcurr]['center'][0], data[newcurr]['center'][1]);
+        changeCenter(data_array[newcurr][0]['center'][0], data_array[newcurr][0]['center'][1]);
+    }
+
+    const handleShowImage = (polygon) => {
+        setShowSlider(true);
+        setImages(polygon);
+    }
+
+    const handleCloseImage = () => {
+        setShowSlider(false);
+        setImages([]);
     }
 
     return (<>
@@ -88,7 +104,7 @@ const Start = () => {
             <div class="row">
 
                 <div class="col-md-12">
-                    <MapContainer center={center} zoom={5} scrollWheelZoom={false} ref={setMap}>
+                    <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={setMap}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -96,14 +112,15 @@ const Start = () => {
                         <MapEvents />
                         <Polyline pathOptions={lineOptions} positions={polygons} />
                         {data_array.map(polygon => {
-                            return <ToolTipCircle polygon={{ polygon }} />
-                            // return <Circle eventHandlers={showImages} center={polygon[0]['center']} pathOptions={{ color: "red" }} radius={200} ><Tooltip>Images Available: {polygon.length} <br /> Click to load images</Tooltip></Circle>
+                            return <ToolTipCircle polygon={{ polygon }} handle={handleShowImage} />
                         })}
                     </MapContainer>
                 </div>
 
             </div>
         </div>
+        {showSlider ? <Slider images={{ images }}></Slider> : ""}
+
     </>)
 }
 
