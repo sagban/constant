@@ -16,9 +16,8 @@ const Header = () => {
                         <div class="s-header-v2__navbar-col s-header-v2__navbar-col-width--130">
                             <div class="s-header-v2__logo">
                                 <a href="/" class="s-header-v2__logo-link">
-                                    <p>SAR Catalog</p>
-                                    {/* <img class="s-header-v2__logo-img s-header-v2__logo-img--default" src="/logo.png" alt="logo" height="48" />
-                                    <img class="s-header-v2__logo-img s-header-v2__logo-img--shrink" src="/logo-sm.png" alt="logo" height="48" /> */}
+                                    <img class="s-header-v2__logo-img s-header-v2__logo-img--default" src="/logo.png" alt="logo" height="24" />
+                                    <img class="s-header-v2__logo-img s-header-v2__logo-img--shrink" src="/logo-sm.png" alt="logo" height="48" />
                                 </a>
                             </div>
                         </div>
@@ -26,8 +25,7 @@ const Header = () => {
                             <div class="collapse navbar-collapse s-header-v2__navbar-collapse" id="nav-collapse">
                                 <ul class="s-header-v2__nav">
                                     <li class="s-header-v2__nav-item"><a href="/about" class="s-header-v2__nav-link">About</a></li>
-                                    <li class="s-header-v2__nav-item"><a href="/get-started" class="s-header-v2__nav-link">Crops</a></li>
-                                    <li className="s-header-v2__nav-item"><a href="/team" class="s-header-v2__nav-link">Team</a>
+                                    <li className="s-header-v2__nav-item"><a href="https://github.com/sagban/constant" class="s-header-v2__nav-link">GitHub</a>
                                     </li>
                                 </ul>
                             </div>

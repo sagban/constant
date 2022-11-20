@@ -7,7 +7,7 @@ const About = () => {
             <div class="row g-padding-y-50--xs ">
 
                 <div class="col-md-6">
-                    <h1 class="g-font-weight--700"><b>What's Farming MadeEasy and why did we create this?</b></h1>
+                    <h1 class="g-font-weight--700"><b>Only Change is Constant</b></h1>
                     <p class="g-font-weight--700 g-color--dark g-font-size-17--xs g-margin-t-25--xs">Precision agriculture is in trend nowadays. Precision agriculture is a modern farming technique that uses the data of soil characteristics, soil types, crop yield data, and weather conditions and suggests the farmers the most optimal crop to grow on their farms for maximum yield and profit. This technique can reduce crop failures and help farmers make informed decisions about their farming strategy.</p>
                     <p class="g-font-weight--700 g-color--dark g-font-size-17--xs g-margin-t-25--xs">In order to mitigate the agrarian crisis in the current status quo, there is a need for better recommendation systems to alleviate the problem by helping the farmers to make an informed decision before starting the cultivation of crops.</p>
                 </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import Home from './pages/home';
 import About from './pages/about';
 import Team from './pages/team';
 import Start from './pages/start';
@@ -16,16 +15,10 @@ root.render(
       <Header />
       <Router>
         <Switch>
-          <Route exact path='/' element={<Home />} />
+          <Route exact path='/' element={<Start />} />
         </Switch>
         <Switch>
           <Route exact path='/about' element={<About />} />
-        </Switch>
-        <Switch>
-          <Route exact path='/team' element={<Team />} />
-        </Switch>
-        <Switch>
-          <Route exact path='/get-started' element={<Start />} />
         </Switch>
 
       </Router>
