@@ -7,11 +7,14 @@ import Start from './pages/start';
 import Header from './components/header';
 import Footer from './components/footer';
 import { BrowserRouter as Router, Routes as Switch, Route, Link } from 'react-router-dom';
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <div>
+      <ReactNotifications />
       <Header />
       <Router>
         <Switch>

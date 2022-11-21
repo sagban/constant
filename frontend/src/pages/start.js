@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, CSSProperties } from "react";
 import axios from 'axios';
 import { MapContainer, TileLayer, useMapEvents, Circle, Polyline, Tooltip, Rectangle } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
@@ -8,20 +8,34 @@ import Slider from "../components/slider";
 import DatePicker from "react-datepicker";
 import { stringify } from 'wkt';
 import "react-datepicker/dist/react-datepicker.css";
+import MoonLoader from "react-spinners/MoonLoader";
+import { Store } from 'react-notifications-component';
+
+const loaderOverride: CSSProperties = {
+    position: "absolute",
+    display: "flex",
+    top: "50%",
+    left: "45%",
+    margin: "0 auto",
+    borderColor: "red",
+    zIndex: 1000
+};
+
 const Start = () => {
 
     const lineOptions = { color: 'purple' }
-    const zoom = 10;
+    const zoom = 12;
     const [curr, setCurr] = useState(0);
     const [map, setMap] = useState(null);
     const [showSlider, setShowSlider] = useState(false);
     const [selectMode, setSelectMode] = useState(false);
+    const [isloading, setIsLoading] = useState(false);
     const [images, setImages] = useState([]);
     const [rectangle, setRectangle] = useState([]);
     const [startdate, setStartDate] = useState("");
     const [enddate, setEndDate] = useState("");
-
-    const data = rawdata['data'];
+    const [data, setData] = useState(rawdata['data']);
+    // const data = ;
 
     // Grouping on the basis in latitude and longitude
     const dict = {}
@@ -58,11 +72,17 @@ const Start = () => {
 
     const [center, setCenter] = useState(polygons[curr][0]);
 
+    const xposeCoordinates = (polygon) => {
+        return polygon.map(coordinates => {
+            return [coordinates[1], coordinates[0]]
+        })
+    };
+
     const changeCenter = (lat, lng) => {
 
         lat = parseFloat(lat).toFixed(6);
         lng = parseFloat(lng).toFixed(6);
-        map.flyTo([lat, lng], map.zoom);
+        map.flyTo([lat, lng], zoom);
         setCenter([lat, lng]);
     }
 
@@ -80,12 +100,7 @@ const Start = () => {
                         rectangle.push([lat, lng]);
                         rectangle.push(rectangle[0]);
                         setRectangle(rectangle);
-                        console.log(rectangle);
-                        const str = stringify({
-                            type: "Polygon",
-                            coordinates: [rectangle]
-                        })
-                        console.log(str);
+
                     }
                     else if (rectangle.length < 4) {
                         rectangle.push([lat, lng]);
@@ -143,9 +158,85 @@ const Start = () => {
         }
     }
 
+    const callAPI = () => {
+        setIsLoading(true);
+        const baseURL = "https://tzxz6l7dd2.execute-api.us-east-1.amazonaws.com/prod/dataexchangeapi-function?";
+        let queryParams = ""
+        if (rectangle.length > 0) {
+            const area = stringify({
+                type: "Polygon",
+                coordinates: [xposeCoordinates(rectangle)]
+            });
+            queryParams += "area=" + area + "&";
+        }
+        if (startdate !== "") {
+            queryParams += "startdate=" + new Date(startdate).toISOString() + "&";
+        }
+        if (enddate !== "") {
+            queryParams += "enddate=" + new Date(enddate).toISOString() + "&";
+        }
+
+        const triggerURL = baseURL + queryParams;
+
+        axios.get(triggerURL).then(res => {
+            setIsLoading(false);
+            if (res.status === 200 && res.hasOwnProperty("data")) {
+                if (res['data'].hasOwnProperty("data")) {
+                    if (res['data']['data'].length > 0) {
+                        setData(res['data']['data']);
+                        map.flyTo(res['data']['data'][0]['center'], 2);
+                        Store.addNotification({
+                            title: "Request completed!",
+                            message: "Map is updated with the new data points",
+                            type: "success",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animate__animated", "animate__fadeIn"],
+                            animationOut: ["animate__animated", "animate__fadeOut"],
+                            dismiss: {
+                                duration: 4000,
+                                onScreen: true
+                            }
+                        });
+                    }
+                    else {
+                        Store.addNotification({
+                            title: "Request completed!",
+                            message: "No new data points for given set of filters",
+                            type: "warning",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animate__animated", "animate__fadeIn"],
+                            animationOut: ["animate__animated", "animate__fadeOut"],
+                            dismiss: {
+                                duration: 4000,
+                                onScreen: true
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+                Store.addNotification({
+                    title: "Request Failed!",
+                    message: "Something went wrong!",
+                    type: "danger",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 4000,
+                        onScreen: true
+                    }
+                });
+            }
+        })
+    }
+
     return (<>
 
-        <div class="container g-padding-y-45--xs g-margin-t-40--xs">
+        <div class="container g-padding-y-50--xs g-margin-t-30--xs">
             <div class="row">
                 <div class="col-md-2">
                     <div className="g-margin-b-10--xs">
@@ -167,27 +258,18 @@ const Start = () => {
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div className="g-margin-b-10--xs">
-                        <label>Center Latitude</label>
-                        <input disabled type={"text"} className="s-form-v4__input" onChange={(e) => changeCenter(e.target.value, center[1])} placeholder="Enter Latitude" value={center[0]}></input>
+                    <div className="g-margin-t-25--xs">
+                        <button onClick={() => callAPI()}
+                            class="g-radius--3 text-uppercase s-btn s-btn--xs s-btn--primary-bg g-padding-x-30--xs">Search</button>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div className="g-margin-b-10--xs">
-                        <label>Center Longitude</label>
-                        <input disabled type={"text"} className="s-form-v4__input" onChange={(e) => changeCenter(center[0], e.target.value)} placeholder="Enter Longitude" value={center[1]}></input>
-                    </div>
-                </div>
-                <div class="col-md-2"><div className="g-margin-t-25--xs">
-                    <button onClick={() => nextPolygon()}
-                        class="g-radius--3 text-uppercase s-btn s-btn--xs s-btn--primary-bg g-padding-x-20--xs">Next</button>
-                </div></div>
+
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={setMap}>
                         <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            attribution=''
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <MapEvents />
@@ -199,6 +281,20 @@ const Start = () => {
                     </MapContainer>
                 </div>
             </div>
+            <div className="row" style={{ "position": "absolute", "margin-top": "-38px", "z-index": "1001", "left": "87.8%" }}>
+                <div class="col-md-1"><div>
+                    <button onClick={() => nextPolygon()}
+                        class="text-uppercase s-btn s-btn--xs s-btn--primary-bg g-padding-x-30--xs">Next</button>
+                </div></div>
+            </div>
+            {isloading ? <MoonLoader
+                color={"#E91E63"}
+                loading={isloading}
+                cssOverride={loaderOverride}
+                size={80}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            /> : ''}
         </div>
         {showSlider ? <Slider images={{ images }} handle={handleCloseImage}></Slider> : ""}
 

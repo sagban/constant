@@ -9,6 +9,7 @@ def lambda_handler(event,context):
     startdate = "2021-01-01T00:00:00Z"
     enddate = "2022-11-01T00:00:00Z"
     intersectsWKT = ""
+    event = event['queryStringParameters']
     if "startdate" in event and event["startdate"] != "":
         startdate = event["startdate"]
     
@@ -21,7 +22,7 @@ def lambda_handler(event,context):
     
     body =  "{ursa_udp_availablemetadatarecord( \
         header:{ commonProperties:{imageBoundsGeoJsonPolygon:{"+ intersectsWKT +"}}} \
-        limit: 10 \
+        limit: 2000 \
         sortBy: { field: \"content.catalogProperties.startTimeUTC\", sortOrder: \"ASC\" } \
         content: { catalogProperties: { \
             startTimeUTC: { gt: \"" + startdate + "\" lt: \"" + enddate + "\" } \
@@ -38,9 +39,9 @@ def lambda_handler(event,context):
     polygons = []
     
     adx_response=adx.send_api_asset(
-        DataSetId="XXXXXXXXXXXXXXXXXXXX",
-        RevisionId="XXXXXXXXXXXXXXXXXXXX",
-        AssetId="XXXXXXXXXXXXXXXXXXXX",
+        DataSetId="XXXXXXXXXXXXXXXXXXXXXX",
+        RevisionId="XXXXXXXXXXXXXXXXXXXXXX",
+        AssetId="XXXXXXXXXXXXXXXXXXXXXX",
         Method="POST",
         Path="/psdm/graphql",
         Body=body
@@ -70,4 +71,14 @@ def lambda_handler(event,context):
         "paginationInfo": paginationInfo
     }
     
-    return data
+    res = {
+        "isBase64Encoded": True,
+        "statusCode": 200,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": True,
+        },
+        "body": json.dumps(data)
+    }
+    
+    return res
