@@ -17,7 +17,7 @@ const Footer = () => {
                     <div class="col-xs-12 col-sm-4"></div>
                     <div class="col-xs-12 col-sm-4">
                         <p class="g-font-size-13--xs g-text-right--md g-margin-b-0--xs g-color--white-opacity">
-                            <span> Powered by </span><a class="g-color--white-opacity g-font-size-13--xs" href="https://www.aws.com/" target="_blank" rel="noreferrer">AWS Data Exchange</a>
+                            <span> Powered by </span><a class="g-color--white-opacity g-font-size-13--xs" href="https://www.aws.com/" target="_blank" rel="noreferrer">AWS Data Exchange API</a>
                         </p>
                     </div>
                 </div>

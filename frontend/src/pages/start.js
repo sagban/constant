@@ -35,7 +35,6 @@ const Start = () => {
     const [startdate, setStartDate] = useState("");
     const [enddate, setEndDate] = useState("");
     const [data, setData] = useState(rawdata['data']);
-    // const data = ;
 
     // Grouping on the basis in latitude and longitude
     const dict = {}
