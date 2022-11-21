@@ -8,11 +8,10 @@ const About = () => {
 
                 <div class="col-md-6">
                     <h1 class="g-font-weight--700"><b>Only Change is Constant</b></h1>
-                    <p class="g-font-weight--700 g-color--dark g-font-size-17--xs g-margin-t-25--xs">Precision agriculture is in trend nowadays. Precision agriculture is a modern farming technique that uses the data of soil characteristics, soil types, crop yield data, and weather conditions and suggests the farmers the most optimal crop to grow on their farms for maximum yield and profit. This technique can reduce crop failures and help farmers make informed decisions about their farming strategy.</p>
-                    <p class="g-font-weight--700 g-color--dark g-font-size-17--xs g-margin-t-25--xs">In order to mitigate the agrarian crisis in the current status quo, there is a need for better recommendation systems to alleviate the problem by helping the farmers to make an informed decision before starting the cultivation of crops.</p>
+                    <p class="g-font-weight--700 g-color--dark g-font-size-17--xs g-margin-t-25--xs">Constant is a web application, that is made for change detection. It provides an easy-to-use platform for users to search through the map interface for SAR images based on geo-locations and timestamps according to the need and use case. It looks through the world's largest network of commercial SAR satellites that has an archive of over 10 million images and 14 years of history. And present all the images in a sorted manner right on the top of the map in order to provide the user whole some idea about the images such that from where, what time, and how these images were taken by the SAR satellites.</p>
                 </div>
                 <div className="col-md-1"></div>
-                <div className="col-md-5"><img class="g-margin-t-0--xs" src="https://images.unsplash.com/photo-1560493676-04071c5f467b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80" alt="Logo" width="480" /></div>
+                <div className="col-md-5"><img class="g-margin-t-0--xs" src="https://www.iceye.com/hubfs/Data%20formats%20-%20SLC%20thumbnail.jpg" alt="Logo" width="480" /></div>
             </div>
 
         </div>
